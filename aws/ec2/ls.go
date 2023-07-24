@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+type LsFlag struct {
+	All bool
+}
+
 func Ls(*cobra.Command, []string) {
 	svc := ec2.New(
 		session.New(),

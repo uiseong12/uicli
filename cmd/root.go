@@ -1,16 +1,15 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
-
-
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -37,15 +36,23 @@ func Execute() {
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
+	cobra.OnInitialize(initConfig)
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.uicli.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default: $HOME/.myaws.yaml)")
+	rootCmd.PersistentFlags().StringVar(&myawsFlag.Region, "region", "", "AWS region")
 
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	viper.BindPFlag("region", rootCmd.PersistentFlags().Lookup("region"))
 }
 
+func initConfig() {
+	if cfgFile != "" {
+		viper.SetConfigName("config") // name of config file (without extension)
+	}
 
+	viper.SetConfigType("yaml")         // REQUIRED if the config file does not have the extension in the name
+	viper.AddConfigPath("$HOME/.uicli") // call multiple times to add many search paths
+	err := viper.ReadInConfig()         // Find and read the config file
+	if err != nil {                     // Handle errors reading the config file
+		panic(fmt.Errorf("fatal error config file: %w", err))
+	}
+}
