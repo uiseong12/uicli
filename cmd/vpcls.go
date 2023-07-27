@@ -13,7 +13,7 @@ import (
 // vpclsCmd represents the vpcls command
 var vpclsCmd = &cobra.Command{
 	Use:   "vpcls",
-	Short: "A brief description of your command",
+	Short: "All account VPC list",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

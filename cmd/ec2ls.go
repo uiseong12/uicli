@@ -4,12 +4,13 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"github.com/aws/aws-sdk-go/service/ec2"
+	"uicli/amazon/ec2"
+
 	"github.com/spf13/cobra"
-	"github.com/uiseong12/uicli/amazon/ec2"
+	uicliEc2 "github.com/uiseong12/uicli/amazon/ec2"
 )
 
-var ec2LsFlag = ec2.LsFlag
+var ec2LsFlag = uicliEc2.LsFlag
 
 // ec2lsCmd represents the ec2ls command
 var ec2lsCmd = &cobra.Command{
